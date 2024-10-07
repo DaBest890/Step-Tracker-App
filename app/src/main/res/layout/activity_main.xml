@@ -1,7 +1,105 @@
-<TextView android:id="@+id/stepCountView"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Steps: 0"
-    android:textSize="24sp"
-    android:layout_gravity="center"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:fitsSystemWindows="true"
+    android:paddingTop="?attr/actionBarSize"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
+
+    <!-- ProgressBar for Step Tracking -->
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/stepProgressBar"
+        android:layout_width="@dimen/progress_bar_size"
+        android:layout_height="@dimen/progress_bar_size"
+        android:layout_marginTop="@dimen/margin_top"
+        android:max="@integer/step_goal"
+        app:indicatorSize="@dimen/indicator_size"
+        app:trackThickness="@dimen/track_thickness"
+        app:indicatorColor="@color/progress_gradient"
+        app:trackColor="@color/primary_color"
+        app:layout_constraintBottom_toTopOf="@+id/caloriesBurned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <!-- Step Count Display Inside Progress Bar -->
+    <TextView
+        android:id="@+id/stepCountInsideProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/progress_text_size"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/stepProgressBar"
+        app:layout_constraintEnd_toEndOf="@+id/stepProgressBar"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="@+id/stepProgressBar"
+        app:layout_constraintTop_toTopOf="@+id/stepProgressBar"
+        app:layout_constraintVertical_bias="0.468" />
+
+    <!-- Step Count Label -->
+    <TextView
+        android:id="@+id/stepCountLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/steps_taken"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/label_text_size"
+        android:fontFamily="@font/monsterrat_light"
+        app:layout_constraintTop_toBottomOf="@+id/stepProgressBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Step Count Value Display -->
+    <TextView
+        android:id="@+id/stepCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/text_padding"
+        android:text="@string/initial_step_count"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/step_count_text_size"
+        android:textStyle="bold"
+        android:fontFamily="@font/monsterrat_light"
+        app:layout_constraintTop_toBottomOf="@+id/stepCountLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Calories Burned Display -->
+    <TextView
+        android:id="@+id/caloriesBurned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/monsterrat_light"
+        android:padding="@dimen/text_padding"
+        android:text="@string/initial_calories"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/calories_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stepCount" />
+
+    <!-- Reset Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/resetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@color/primary_color"
+        android:icon="@drawable/ic_refresh"
+        android:padding="@dimen/button_padding"
+        android:text="@string/reset_steps"
+        android:textColor="@android:color/white"
+        app:cornerRadius="@dimen/button_corner_radius"
+        app:iconPadding="@dimen/button_icon_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/caloriesBurned" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

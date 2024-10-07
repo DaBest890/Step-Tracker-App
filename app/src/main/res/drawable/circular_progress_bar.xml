@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background of the progress bar -->
+    <item android:id="@android:id/background">
+        <shape android:shape="ring"
+            android:innerRadiusRatio="3"
+            android:thicknessRatio="8"
+            android:useLevel="false">
+            <solid android:color="#e0e0e0" /> <!-- Light gray background -->
+        </shape>
+    </item>
+
+    <!-- Progress of the bar -->
+    <item android:id="@android:id/progress">
+        <rotate
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fromDegrees="270"
+            android:toDegrees="270">
+            <shape
+                android:innerRadiusRatio="3"
+                android:shape="ring"
+                android:thicknessRatio="8"
+                android:useLevel="true">
+                <solid android:color="@android:color/holo_blue_light" /> <!-- Holo Blue Light progress color -->
+            </shape>
+        </rotate>
+    </item>
+</layer-list>

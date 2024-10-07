@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Use an AppCompat theme instead of Material -->
-    <style name="Theme.StepTracker" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- You can customize your theme here -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryDark">@color/purple_700</item>
-        <item name="colorAccent">@color/teal_200</item>
+    <style name="Theme.StepTracker" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/green_100</item>
+        <item name="colorPrimaryVariant">@color/green_200</item>
+        <item name="colorSecondary">@color/blue_100</item>
+        <item name="android:fontFamily">sans-serif</item> <!-- Use system default font -->
+        <item name="android:textColor">@color/black</item>
     </style>
-
 </resources>

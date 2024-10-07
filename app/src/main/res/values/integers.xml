@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="step_goal">10000</integer>
+    <integer name="initial_progress">5000</integer>
+</resources>

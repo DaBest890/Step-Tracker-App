@@ -1,3 +1,9 @@
 <resources>
+    <string name="steps_taken">Steps Taken</string>
+    <string name="reset_steps">Reset Steps</string>
+    <string name="initial_step_count">5000</string>
+    <string name="calories_burned">Calories: %1$.2f</string>
+    <string name="initial_calories">200</string>
     <string name="app_name">Step Tracker</string>
+    <string name="step_count">Steps: %1$d</string>
 </resources>
