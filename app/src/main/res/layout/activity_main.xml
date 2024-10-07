@@ -1,7 +1,5 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/black"
@@ -19,7 +17,7 @@
         android:max="@integer/step_goal"
         app:indicatorSize="@dimen/indicator_size"
         app:trackThickness="@dimen/track_thickness"
-        app:indicatorColor="@color/progress_gradient"
+        app:indicatorColor="@color/progress_green"
         app:trackColor="@color/primary_color"
         app:layout_constraintBottom_toTopOf="@+id/caloriesBurned"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,5 +99,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/caloriesBurned" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/debugModeSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/debug_mode"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/resetButton"/>
+
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,6 @@
 package com.example.steptracker
 
+import com.google.android.material.switchmaterial.SwitchMaterial
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.pm.PackageManager
@@ -30,15 +31,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private val activityRecognitionRequestCode = 101
     private var currentSteps: Float = 0f
     private var caloriesBurned: Float = 0f
-
-    // Debug mode flag
-    private val debugMode = false  // Set to true for testing purposes
+    private var debugMode: Boolean = false // This will be toggled via the Switch
 
     // UI Elements
     private lateinit var stepCountView: TextView
     private lateinit var caloriesBurnedView: TextView
     private lateinit var stepProgressBar: ProgressBar
     private lateinit var resetButton: Button
+    private lateinit var debugModeSwitch: SwitchMaterial // Switch for Debug Mode
 
     // Constants
     private val stepToCalorieConversionRate: Float = 0.04f  // Approximation: 0.04 calories per step
@@ -52,11 +52,24 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         caloriesBurnedView = findViewById(R.id.caloriesBurned)
         stepProgressBar = findViewById(R.id.stepProgressBar)
         resetButton = findViewById(R.id.resetButton)
+        debugModeSwitch = findViewById(R.id.debugModeSwitch) // Initialize Debug Mode Switch
 
         // Set progress bar max steps
         stepProgressBar.max = 10000  // Goal: 10,000 steps
 
-        // Load previous total steps from SharedPreferences
+        // Set up the Debug Mode Switch behavior
+        debugModeSwitch.setOnCheckedChangeListener { _, isChecked ->
+            debugMode = isChecked
+            if (debugMode) {
+                Toast.makeText(this, "Debug mode enabled: Simulating 5000 steps", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Debug mode disabled: Real sensor data", Toast.LENGTH_SHORT).show()
+            }
+            // Save the debug mode state
+            saveDebugModeState()
+        }
+
+        // Load previous total steps and debug mode state from SharedPreferences
         loadData()
 
         // Request Activity Recognition permission if needed
@@ -91,14 +104,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         lifecycleScope.launch(Dispatchers.Default) {
             if (debugMode) {
-                // Simulate steps for testing
-                currentSteps = 2200f
-                Log.d("StepTracker", "Debug mode: Testing with 2200 steps")
+                // Simulate steps for testing (5000 steps)
+                currentSteps = 5000f
+                Log.d("StepTracker", "Debug mode: Simulating 5000 steps")
             } else if (event != null) {
                 // Use real sensor data in production
                 totalSteps = event.values[0]
                 currentSteps = totalSteps - previousTotalSteps
-                Log.d("StepTracker", "Production mode: Real sensor data steps = $currentSteps")
+                Log.d("StepTracker", "Real sensor data: $currentSteps steps")
             }
 
             // Calculate calories burned based on steps
@@ -130,11 +143,20 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         // Not used in this case
     }
 
-    // Save the current steps to SharedPreferences
+    // Save the current steps and debug mode to SharedPreferences
     private fun saveData() {
         val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putFloat("previousTotalSteps", previousTotalSteps)
+        editor.putBoolean("debugMode", debugMode) // Save debug mode state
+        editor.apply()
+    }
+
+    // Save debug mode state only
+    private fun saveDebugModeState() {
+        val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("debugMode", debugMode)
         editor.apply()
     }
 
@@ -142,6 +164,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private fun loadData() {
         val sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
         previousTotalSteps = sharedPreferences.getFloat("previousTotalSteps", 0f)
+        debugMode = sharedPreferences.getBoolean("debugMode", false) // Load debug mode state
+        debugModeSwitch.isChecked = debugMode // Update switch UI
     }
 
     // Reset the step count and progress bar
