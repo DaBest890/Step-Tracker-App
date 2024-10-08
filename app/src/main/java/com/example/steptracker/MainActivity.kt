@@ -1,13 +1,12 @@
 package com.example.steptracker
 
 import java.util.Calendar
-import java.text.SimpleDateFormat
-import java.util.Locale
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.button.MaterialButton
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -15,7 +14,6 @@ import android.hardware.SensorManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
@@ -23,9 +21,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.formatter.ValueFormatter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
@@ -48,6 +52,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
     private lateinit var debugModeSwitch: SwitchMaterial // Switch for Debug Mode
     private lateinit var progressPercentageView: TextView // View to display progress percentage
     private lateinit var currentStepGoalView: TextView // View to display the current step goal
+    private lateinit var stepHistoryChart: LineChart // Chart to display step history
 
     // Constants
     private val stepToCalorieConversionRate: Float = 0.04f  // Approximation: 0.04 calories per step
@@ -65,6 +70,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         debugModeSwitch = findViewById(R.id.debugModeSwitch) // Initialize Debug Mode Switch
         progressPercentageView = findViewById(R.id.progressPercentageView) // Initialize progress percentage view
         currentStepGoalView = findViewById(R.id.currentStepGoalView) // View to display current step goal
+        stepHistoryChart = findViewById(R.id.stepHistoryChart) // Initialize chart view
 
         // Set progress bar max steps to stepGoal from SharedPreferences
         loadStepGoal()
@@ -77,6 +83,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             if (debugMode) {
                 Toast.makeText(this, "Debug mode enabled: Simulating 5000 steps", Toast.LENGTH_SHORT).show()
                 simulateSteps()
+                simulateChartData() // Simulate chart data when debug mode is enabled
             } else {
                 Toast.makeText(this, "Debug mode disabled: Real sensor data", Toast.LENGTH_SHORT).show()
                 registerSensorListener()
@@ -142,6 +149,59 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
+    // Function to simulate random step history data in debug mode
+    private fun simulateChartData() {
+        val entries = ArrayList<Entry>()
+        val random = Random(System.currentTimeMillis()) // Seed the random generator
+
+        // Generate random step counts for the past 7 days
+        for (i in 0 until 7) {
+            val randomStepCount = random.nextInt(4000, 10000) // Random step count between 4000 and 10000
+            entries.add(Entry(i.toFloat(), randomStepCount.toFloat()))
+        }
+
+        // Create a LineDataSet for the simulated data
+        val lineDataSet = LineDataSet(entries, "Step History")
+        lineDataSet.color = Color.GREEN // Set line color
+        lineDataSet.setCircleColor(Color.WHITE) // Set circle color
+        lineDataSet.lineWidth = 2f
+        lineDataSet.circleRadius = 4f
+
+        // Update the chart with the simulated data
+        val lineData = LineData(lineDataSet)
+        stepHistoryChart.data = lineData
+
+        // Set custom formatter for the x-axis to show days of the week
+        val xAxis = stepHistoryChart.xAxis
+        xAxis.valueFormatter = DayOfWeekValueFormatter() // Custom formatter to show days
+        xAxis.granularity = 1f // Set granularity to ensure one label per day
+        xAxis.setLabelCount(7, true) // Ensure there are 7 labels for 7 days
+        xAxis.textColor = Color.WHITE // Set X-axis label color to white
+
+        // Customize chart appearance
+        stepHistoryChart.axisLeft.textColor = Color.WHITE // Y-axis left label color
+        stepHistoryChart.axisRight.isEnabled = false // Disable right Y-axis
+        stepHistoryChart.legend.textColor = Color.WHITE // Legend text color
+        stepHistoryChart.description.isEnabled = false // Disable description
+
+        stepHistoryChart.invalidate() // Refresh the chart
+    }
+
+    // Custom ValueFormatter to display days of the week on the x-axis
+    class DayOfWeekValueFormatter : ValueFormatter() {
+        private val daysOfWeek = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+
+        // This method will be called for each x value
+        override fun getFormattedValue(value: Float): String {
+            // Get the current day of the week
+            val calendar = Calendar.getInstance()
+            val currentDayIndex = calendar.get(Calendar.DAY_OF_WEEK) - 1 // Calendar.DAY_OF_WEEK returns 1 for Sunday
+            val dayIndex = ((currentDayIndex + value.toInt()) % 7) // Wrap around the days of the week
+
+            return daysOfWeek[dayIndex]
+        }
+    }
+
     // Update the UI elements
     private fun updateUI() {
         stepProgressBar.max = stepGoal  // Update goal max steps
@@ -152,7 +212,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         progressAnimator.interpolator = DecelerateInterpolator()
         progressAnimator.start()
 
-        stepCountView.text = getString(R.string.step_count, currentSteps.toInt())  // Steps: [steps]
+        stepCountView.text = currentSteps.toInt().toString() // Just display the step count
         caloriesBurnedView.text = getString(R.string.calories_burned, caloriesBurned)  // Calories: [calories]
 
         updateProgressPercentage() // Update progress percentage
@@ -247,48 +307,19 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             .show()
     }
 
-    // Add new functionality for history tracking
-    private fun logDailySteps() {
-        val sharedPreferences = getSharedPreferences("stepHistory", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-
-        // Get today's date
-        val calendar = Calendar.getInstance()
-        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar.time)
-
-
-        // Save today's steps in the history
-        editor.putFloat(today, currentSteps)
-        editor.apply()
-
-        Toast.makeText(this, "Today's steps logged!", Toast.LENGTH_SHORT).show()
-    }
-
-    // Function to view step history
-    private fun showStepHistory() {
-        val sharedPreferences = getSharedPreferences("stepHistory", Context.MODE_PRIVATE)
-
-        val allEntries = sharedPreferences.all
-        val historyBuilder = StringBuilder()
-
-        for ((date, steps) in allEntries) {
-            historyBuilder.append("$date: ${steps as Float} steps\n")
-        }
-
-        AlertDialog.Builder(this)
-            .setTitle("Step History")
-            .setMessage(historyBuilder.toString())
-            .setPositiveButton("OK", null)
-            .show()
-    }
-
-    // Reset the step count and progress bar
+    // Reset the step count, progress bar, and progress percentage
     private fun resetSteps() {
         previousTotalSteps = totalSteps
         saveData()
+
+        // Reset progress bar and steps
         stepProgressBar.progress = 0  // Reset progress bar
-        stepCountView.text = getString(R.string.step_count, 0)
+        stepCountView.text = 0.toString() // Just display 0
         caloriesBurnedView.text = getString(R.string.calories_burned, 0f)
+
+        // Reset progress percentage
+        progressPercentageView.text = "0%"
+
         Toast.makeText(this, "Steps reset!", Toast.LENGTH_SHORT).show()
     }
 
@@ -298,6 +329,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
             registerSensorListener()
         } else if (debugMode) {
             simulateSteps() // Simulate steps if in debug mode
+            simulateChartData() // Simulate chart data if in debug mode
         }
     }
 
