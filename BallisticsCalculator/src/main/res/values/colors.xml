@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="blackTheme">#000000</color>
+    <color name="gold">#FFD700</color>
+    <color name="colorPrimary">@color/black</color>
+    <color name="colorPrimaryVariant">@color/black</color>
+    <color name="colorOnPrimary">@color/gold</color>
+    <color name="colorSecondary">@color/gold</color>
+    <color name="colorSecondaryVariant">@color/gold</color>
+    <color name="colorOnSecondary">@color/black</color>
 </resources>

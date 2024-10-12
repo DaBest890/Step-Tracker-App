@@ -26,6 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:hint="@string/caliber_hint"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/textViewBulletDetails"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,6 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:hint="@string/bullet_weight_hint"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/editTextCaliber"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,6 +55,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:hint="@string/muzzle_velocity_hint"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/editTextBulletWeight"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -66,6 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:hint="@string/ballistic_coefficient_hint"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/editTextMuzzleVelocity"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -90,6 +94,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:hint="@string/wind_speed_hint"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/textViewAtmosphericConditions"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -103,6 +108,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:hint="@string/temperature_hint"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/editTextWindSpeed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -112,18 +118,20 @@
             android:imeOptions="actionNext" />
 
         <!-- Unit Toggle Button -->
-        <Switch
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switchUnits"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:text="@string/metric_imperial_toggle"
+            android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@id/editTextTemperature"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="16dp"
             android:padding="12dp"
+            android:paddingEnd="24dp"
             android:checked="false"
             android:contentDescription="@string/switch_units_description" />
+
 
         <!-- Calculate and Save Buttons -->
         <Button

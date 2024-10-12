@@ -1,47 +1,26 @@
 package com.example.ballisticscalculator
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.ballisticscalculator.ui.theme.StepTrackersTheme
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            StepTrackersTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+        setContentView(R.layout.activity_main)
+
+        val switchUnits = findViewById<SwitchCompat>(R.id.switchUnits)
+
+        // Set initial text based on the default state
+        switchUnits.text = if (switchUnits.isChecked) "Imperial" else "Metric"
+
+        // Set up a listener to change the text based on the toggle state
+        switchUnits.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                switchUnits.text = "Imperial"
+            } else {
+                switchUnits.text = "Metric"
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    StepTrackersTheme {
-        Greeting("Android")
     }
 }

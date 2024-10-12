@@ -51,6 +51,7 @@ android {
 }
 
 dependencies {
+    implementation ("com.google.android.material:material:1.8.0")
     implementation(libs.constraintlayout)
     implementation(libs.mpandroidchart)
     implementation(libs.room.runtime)
