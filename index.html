@@ -4,9 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio Page</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<h1>Welcome to My Portfolio!</h1>
-<p>This is my sample HTML content integrated within an Android app.</p>
+<header>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<section id="home">
+    <h2>Home</h2>
+    <p>Welcome to my portfolio. Scroll down to know more about me and my projects.</p>
+</section>
+
+<section id="contact">
+    <h2>Contact</h2>
+    <p>If you have any questions or just want to say hello, feel free to reach out!</p>
+</section>
+
+<section class="hero">
+    <div class="hero-text">
+        <h1>Welcome to My Portfolio!</h1>
+        <p>Explore my projects and get to know me better.</p>
+    </div>
+</section>
+
+<main>
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Hi, I'm Maximo! I'm a passionate software developer and aspiring data scientist. I enjoy building projects that solve real-world problems and learning new technologies.</p>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="card">
+            <h3>StepTracker App</h3>
+            <p>A mobile application to track daily steps, built with Android Studio. <a href="https://github.com/DaBest890/StepTrackers" target="_blank">View on GitHub</a></p>
+        </div>
+        <!-- Add more project cards here -->
+    </section>
+</main>
+
+<footer>
+    <p>Contact me at <a href="mailto:maximo.winfield.7@gmail.com">maximo.winfield.7@gmail.com</a></p>
+    <p>Connect with me on <a href="https://www.linkedin.com/in/mow851095611566412" target="_blank">LinkedIn</a></p>
+    <p>&copy; 2024 Maximo Obra Winfield</p>
+</footer>
 </body>
 </html>
