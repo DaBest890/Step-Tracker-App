@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">BallisticsCalculator</string>
+    <string name="calculate">Calculate</string>
+    <string name="caliber_hint">Caliber (mm/in)</string>
+    <string name="bullet_weight_hint">Bullet Weight (grains/grams)</string>
+    <string name="muzzle_velocity_hint">Muzzle Velocity (fps/mps)</string>
+    <string name="ballistic_coefficient_hint">Ballistic Coefficient</string>
+    <string name="wind_speed_hint">Wind Speed (mph/kph)</string>
+    <string name="temperature_hint">Temperature (°F/°C)</string>
+    <string name="metric_imperial_toggle">Metric / Imperial</string>
+    <string name="calculate_button">Calculate</string>
+    <string name="save_profile_button">Save Profile</string>
+    <string name="load_profile_button">Load Profile</string>
+    <string name="delete_profile_button">Delete Profile</string>
+    <string name="bullet_details">Bullet Details</string>
+    <string name="atmospheric_conditions">Atmospheric Conditions</string>
+    <string name="switch_units_description">Switch between units of measurement</string>
+    <string name="calculate_button_description">Button to calculate the result</string>
+    <string name="save_profile_button_description">Button to save the profile</string>
+    <string name="load_profile_button_description">Button to load the profile</string>
+    <string name="delete_profile_button_description">Button to delete the profile</string>
+
+</resources>

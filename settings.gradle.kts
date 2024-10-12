@@ -25,5 +25,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Step Tracker"
-include(":app")
+rootProject.name = "StepTrackers"
+include(":StepTracker")
+
+include(":BallisticsCalculator")

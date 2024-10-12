@@ -1,0 +1,179 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Bullet Details Section -->
+        <TextView
+            android:id="@+id/textViewBulletDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bullet_details"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/editTextCaliber"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/caliber_hint"
+            app:layout_constraintTop_toBottomOf="@id/textViewBulletDetails"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            android:inputType="numberDecimal"
+            android:layout_margin="16dp"
+            android:padding="12dp"
+            android:imeOptions="actionNext" />
+
+        <EditText
+            android:id="@+id/editTextBulletWeight"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/bullet_weight_hint"
+            app:layout_constraintTop_toBottomOf="@id/editTextCaliber"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="numberDecimal"
+            android:layout_margin="16dp"
+            android:padding="12dp"
+            android:imeOptions="actionNext" />
+
+        <EditText
+            android:id="@+id/editTextMuzzleVelocity"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/muzzle_velocity_hint"
+            app:layout_constraintTop_toBottomOf="@id/editTextBulletWeight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="numberDecimal"
+            android:layout_margin="16dp"
+            android:padding="12dp"
+            android:imeOptions="actionNext" />
+
+        <EditText
+            android:id="@+id/editTextBallisticCoefficient"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/ballistic_coefficient_hint"
+            app:layout_constraintTop_toBottomOf="@id/editTextMuzzleVelocity"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="numberDecimal"
+            android:layout_margin="16dp"
+            android:padding="12dp"
+            android:imeOptions="actionNext" />
+
+        <!-- Atmospheric Conditions Section -->
+        <TextView
+            android:id="@+id/textViewAtmosphericConditions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/atmospheric_conditions"
+            app:layout_constraintTop_toBottomOf="@id/editTextBallisticCoefficient"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/editTextWindSpeed"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/wind_speed_hint"
+            app:layout_constraintTop_toBottomOf="@id/textViewAtmosphericConditions"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="numberDecimal"
+            android:layout_margin="16dp"
+            android:padding="12dp"
+            android:imeOptions="actionNext" />
+
+        <EditText
+            android:id="@+id/editTextTemperature"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:hint="@string/temperature_hint"
+            app:layout_constraintTop_toBottomOf="@id/editTextWindSpeed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:inputType="numberDecimal"
+            android:layout_margin="16dp"
+            android:padding="12dp"
+            android:imeOptions="actionNext" />
+
+        <!-- Unit Toggle Button -->
+        <Switch
+            android:id="@+id/switchUnits"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="@string/metric_imperial_toggle"
+            app:layout_constraintTop_toBottomOf="@id/editTextTemperature"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:padding="12dp"
+            android:checked="false"
+            android:contentDescription="@string/switch_units_description" />
+
+        <!-- Calculate and Save Buttons -->
+        <Button
+            android:id="@+id/buttonCalculate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/calculate_button"
+            app:layout_constraintTop_toBottomOf="@id/switchUnits"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:padding="12dp"
+            android:contentDescription="@string/calculate_button_description" />
+
+        <Button
+            android:id="@+id/buttonSaveProfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/save_profile_button"
+            app:layout_constraintTop_toBottomOf="@id/buttonCalculate"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:padding="12dp"
+            android:contentDescription="@string/save_profile_button_description" />
+
+        <!-- Load and Delete Profiles -->
+        <Button
+            android:id="@+id/buttonLoadProfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/load_profile_button"
+            app:layout_constraintTop_toBottomOf="@id/buttonSaveProfile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:padding="12dp"
+            android:contentDescription="@string/load_profile_button_description" />
+
+        <Button
+            android:id="@+id/buttonDeleteProfile"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_profile_button"
+            app:layout_constraintTop_toBottomOf="@id/buttonLoadProfile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="16dp"
+            android:padding="12dp"
+            android:contentDescription="@string/delete_profile_button_description" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
